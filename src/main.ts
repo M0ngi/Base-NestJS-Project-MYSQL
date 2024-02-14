@@ -11,7 +11,13 @@ async function bootstrap() {
 
   const { uri } = configService.getFrontConfig();
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    stopAtFirstError: true,
+    forbidUnknownValues: true,
+    forbidNonWhitelisted: true,
+    transform: true,
+    whitelist: true,
+  }));
   app.useGlobalInterceptors(new BaseInterceptor());
   app.useLogger(['log', 'error', 'warn']);
   app.enableCors({
